@@ -1,0 +1,5 @@
+<Solution>
+  <Project Path="FCG.Notifications.Domain/FCG.Notifications.Domain.csproj" />
+  <Project Path="FCG.Notifications.Tests/FCG.Notifications.Tests.csproj" />
+  <Project Path="FCG.Notifications.Worker/FCG.Notifications.Worker.csproj" />
+</Solution>

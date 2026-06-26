@@ -1,0 +1,38 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: notifications-api
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: notifications-api
+  template:
+    metadata:
+      labels:
+        app: notifications-api
+    spec:
+      containers:
+        - name: notifications-api
+          image: fcg-notifications-api:latest
+          env:
+            - name: RABBITMQ__HOST
+              valueFrom:
+                configMapKeyRef:
+                  name: notifications-config
+                  key: RABBITMQ__HOST
+            - name: RABBITMQ__VIRTUALHOST
+              valueFrom:
+                configMapKeyRef:
+                  name: notifications-config
+                  key: RABBITMQ__VIRTUALHOST
+            - name: RABBITMQ__USERNAME
+              valueFrom:
+                secretKeyRef:
+                  name: notifications-secret
+                  key: RABBITMQ__USERNAME
+            - name: RABBITMQ__PASSWORD
+              valueFrom:
+                secretKeyRef:
+                  name: notifications-secret
+                  key: RABBITMQ__PASSWORD
