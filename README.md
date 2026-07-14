@@ -140,7 +140,7 @@ Os manifestos estão na pasta `/k8s` deste repositório:
 
 | Arquivo | O que faz |
 |---|---|
-| `deployment.yaml` | Sobe o container deste serviço, reiniciando sozinho se cair |
+| `deployment.yaml` | Sobe o container deste serviço, reiniciando sozinho se cair. Usa `imagePullPolicy: IfNotPresent` — o cluster usa a imagem já carregada localmente (ex: via `minikube image load`) em vez de tentar baixar de um registry |
 | `service.yaml` | Dá o nome de rede `notifications-api` para outros serviços acharem este |
 | `configmap.yaml` | Guarda o endereço e vhost do RabbitMQ (não são segredos) |
 | `secret.yaml` | Guarda usuário/senha do RabbitMQ (dado sensível) |
