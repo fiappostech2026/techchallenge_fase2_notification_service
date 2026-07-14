@@ -15,6 +15,7 @@ spec:
       containers:
         - name: notifications-api
           image: fcg-notifications-api:latest
+          imagePullPolicy: IfNotPresent
           env:
             - name: RABBITMQ__HOST
               valueFrom:
