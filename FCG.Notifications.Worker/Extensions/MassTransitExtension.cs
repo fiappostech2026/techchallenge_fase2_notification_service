@@ -15,6 +15,8 @@ public static class MassTransitExtension
 
         services.AddMassTransit(bus =>
         {
+            bus.SetEndpointNameFormatter(new KebabCaseEndpointNameFormatter("notifications", false));
+
             bus.AddConsumer<UserCreatedEventConsumer>();
             bus.AddConsumer<PaymentProcessedEventConsumer>();
 
@@ -25,6 +27,8 @@ public static class MassTransitExtension
                     h.Username(username);
                     h.Password(password);
                 });
+
+                cfg.UseRawJsonSerializer(RawSerializerOptions.All, isDefault: true);
 
                 cfg.Message<UserCreatedEvent>(x => x.SetEntityName("user-created-event"));
                 cfg.Message<PaymentProcessedEvent>(x => x.SetEntityName("payment-processed-event"));

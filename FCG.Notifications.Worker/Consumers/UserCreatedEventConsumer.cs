@@ -19,14 +19,17 @@ public sealed class UserCreatedEventConsumer : IConsumer<UserCreatedEvent>
 
     public async Task Consume(ConsumeContext<UserCreatedEvent> context)
     {
+        // delay proposital para demo — dá tempo de ver a mensagem na fila no RabbitMQ Management UI
+        await Task.Delay(TimeSpan.FromSeconds(5));
+
         var result = await _validator.ValidateAsync(context.Message);
 
         if (!result.IsValid)
         {
-            _logger.LogWarning("UserCreatedEvent validation failed: {Errors}", result.ToString());
+            _logger.LogWarning("Falha na validação de UserCreatedEvent: {Errors}", result.ToString());
             return;
         }
 
-        _logger.LogInformation("Welcome email simulation for {UserId} with {Email}", context.Message.UserId, context.Message.Email);
+        _logger.LogInformation("Simulação de e-mail de boas-vindas para {UserId} com {Email}", context.Message.UserId, context.Message.Email);
     }
 }

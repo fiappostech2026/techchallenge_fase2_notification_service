@@ -23,7 +23,7 @@ public sealed class ErrorHandlingMiddleware
         catch (Exception ex)
         {
             var tracingId = Guid.NewGuid();
-            _logger.LogError(ex, "Unhandled exception. TracingId: {TracingId}", tracingId);
+            _logger.LogError(ex, "Exceção não tratada. TracingId: {TracingId}", tracingId);
 
             context.Response.StatusCode = (int)HttpStatusCode.InternalServerError;
             context.Response.ContentType = "application/json";

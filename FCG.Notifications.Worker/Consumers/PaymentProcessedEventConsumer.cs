@@ -20,17 +20,20 @@ public sealed class PaymentProcessedEventConsumer : IConsumer<PaymentProcessedEv
 
     public async Task Consume(ConsumeContext<PaymentProcessedEvent> context)
     {
+        // delay proposital para demo — dá tempo de ver a mensagem na fila no RabbitMQ Management UI
+        await Task.Delay(TimeSpan.FromSeconds(5));
+
         var result = await _validator.ValidateAsync(context.Message);
 
         if (!result.IsValid)
         {
-            _logger.LogWarning("PaymentProcessedEvent validation failed: {Errors}", result.ToString());
+            _logger.LogWarning("Falha na validação de PaymentProcessedEvent: {Errors}", result.ToString());
             return;
         }
 
         if (context.Message.Status != PaymentStatus.Approved)
             return;
 
-        _logger.LogInformation("Purchase confirmation for {UserId} game {GameId}", context.Message.UserId, context.Message.GameId);
+        _logger.LogInformation("Confirmação de compra para {UserId} jogo {GameId}", context.Message.UserId, context.Message.GameId);
     }
 }
