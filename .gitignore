@@ -8,3 +8,4 @@ logs/
 *.suo
 .DS_Store
 appsettings.Development.json
+local.settings.json
